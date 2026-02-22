@@ -79,14 +79,13 @@
 
     const current = getCurrentSegment(nowMin);
     if (current) {
-      const remainingSec = Math.max(0, Math.round((current.endMin - nowMin) * 60));
-      countdownEl.textContent = remainingSec + ' s';
+      const remainingMin = current.endMin - nowMin;
+      const m = Math.max(0, Math.floor(remainingMin));
+      const s = Math.max(0, Math.floor((remainingMin - m) * 60));
+      countdownEl.textContent = pad2(m) + ':' + pad2(s);
       countdownEl.classList.remove('idle');
-      if (current.seg.type === 'work' && current.seg.topic) taskEl.textContent = current.seg.topic;
-      else if (current.seg.type === 'shortBreak') taskEl.textContent = 'Short break';
-      else if (current.seg.type === 'longBreak') taskEl.textContent = 'Long break';
-      else if (current.seg.type === 'lunchBreak') taskEl.textContent = 'Lunch break';
-      else taskEl.textContent = current.seg.topic || 'Work';
+      if (current.seg.type === 'work') taskEl.textContent = current.seg.topic || 'Work';
+      else taskEl.textContent = 'Break';
     } else {
       countdownEl.textContent = '--:--';
       countdownEl.classList.add('idle');

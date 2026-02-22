@@ -42,9 +42,9 @@ h1 { font-size: 18px; font-weight: 600; margin: 0 0 16px; color: var(--text); }
 .overlay-toggle.no-drag { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 11px; padding: 2px 6px; }
 .overlay-toggle.no-drag:hover { color: var(--text); }
 .overlay-countdown-wrap { padding: 20px 12px; text-align: center; border-bottom: 1px solid var(--border); }
+.overlay-task { font-size: 20px; font-weight: 500; color: var(--text); margin-bottom: 8px; word-break: break-word; }
 .overlay-countdown { font-size: 42px; font-weight: 300; color: var(--accent); letter-spacing: 0.02em; font-variant-numeric: tabular-nums; line-height: 1; }
 .overlay-countdown.idle { font-size: 28px; color: var(--text-muted); }
-.overlay-task { font-size: 12px; color: var(--text-muted); margin-top: 8px; word-break: break-word; }
 .overlay-body { display: flex; gap: 10px; padding: 12px; flex: 1; min-height: 0; }
 .overlay-left { flex: 0 0 auto; }
 .overlay-segment { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; font-size: 12px; min-height: 22px; }
