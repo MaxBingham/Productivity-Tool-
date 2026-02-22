@@ -28,7 +28,7 @@
 
   function updateClock() {
     const now = new Date();
-    currentTimeEl.textContent = pad2(now.getHours()) + ':' + pad2(now.getMinutes()) + ':' + pad2(now.getSeconds());
+    currentTimeEl.textContent = pad2(now.getHours()) + ':' + pad2(now.getSeconds());
   }
 
   function getCurrentSegment(nowMin) {
@@ -44,8 +44,6 @@
   function render() {
     const now = new Date();
     const nowMin = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
-    const totalDayMin = 24 * 60;
-    const progressPct = (nowMin / totalDayMin) * 100;
 
     segmentList.innerHTML = '';
     segments.forEach((seg) => {
@@ -61,6 +59,19 @@
 
     if (showBar && segments.length > 0) {
       progressBar.style.display = 'block';
+      var totalPlannedMin = 0;
+      var completedMin = 0;
+      segments.forEach(function (seg) {
+        var startMin = timeToMin(seg.start);
+        var endMin = timeToMin(seg.end);
+        totalPlannedMin += endMin - startMin;
+        if (nowMin >= endMin) {
+          completedMin += endMin - startMin;
+        } else if (nowMin > startMin) {
+          completedMin += nowMin - startMin;
+        }
+      });
+      var progressPct = totalPlannedMin > 0 ? (completedMin / totalPlannedMin) * 100 : 0;
       progressFill.style.height = Math.min(100, Math.max(0, progressPct)) + '%';
     } else {
       progressBar.style.display = 'none';
