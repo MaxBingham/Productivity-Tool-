@@ -31,12 +31,14 @@ function createOverlayWindow() {
   overlayWindow = new BrowserWindow({
     width: w,
     height: h,
+    minWidth: 200,
+    minHeight: 260,
     x: sw - w - 16,
     y: 16,
     frame: false,
     alwaysOnTop: true,
     skipTaskbar: true,
-    resizable: false,
+    resizable: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,

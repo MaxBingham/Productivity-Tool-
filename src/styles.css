@@ -34,12 +34,18 @@ h1 { font-size: 18px; font-weight: 600; margin: 0 0 16px; color: var(--text); }
 .settings-panel input { width: 80px; padding: 6px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 4px; margin-left: 8px; }
 
 /* Overlay */
-.overlay { padding: 12px; min-width: 240px; background: var(--bg); }
-.overlay-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-.overlay-title { font-size: 12px; color: var(--text-muted); }
-.overlay-toggle { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 11px; padding: 2px 6px; }
-.overlay-toggle:hover { color: var(--text); }
-.overlay-body { display: flex; gap: 10px; }
+.overlay { padding: 0; min-width: 200px; background: var(--bg); display: flex; flex-direction: column; }
+.overlay-drag { -webkit-app-region: drag; app-region: drag; display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+.overlay-drag .overlay-title { font-size: 12px; color: var(--text-muted); }
+.overlay-clock { font-size: 18px; color: var(--text); font-variant-numeric: tabular-nums; }
+.overlay-toggle { -webkit-app-region: no-drag; app-region: no-drag; }
+.overlay-toggle.no-drag { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 11px; padding: 2px 6px; }
+.overlay-toggle.no-drag:hover { color: var(--text); }
+.overlay-countdown-wrap { padding: 20px 12px; text-align: center; border-bottom: 1px solid var(--border); }
+.overlay-countdown { font-size: 42px; font-weight: 300; color: var(--accent); letter-spacing: 0.02em; font-variant-numeric: tabular-nums; line-height: 1; }
+.overlay-countdown.idle { font-size: 28px; color: var(--text-muted); }
+.overlay-task { font-size: 12px; color: var(--text-muted); margin-top: 8px; word-break: break-word; }
+.overlay-body { display: flex; gap: 10px; padding: 12px; flex: 1; min-height: 0; }
 .overlay-left { flex: 0 0 auto; }
 .overlay-segment { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; font-size: 12px; min-height: 22px; }
 .overlay-segment.done { color: var(--text-muted); }
@@ -48,6 +54,3 @@ h1 { font-size: 18px; font-weight: 600; margin: 0 0 16px; color: var(--text); }
 .overlay-segment .check { color: var(--check); width: 14px; }
 .overlay-bar { width: 6px; background: var(--surface); border-radius: 3px; align-self: stretch; position: relative; overflow: hidden; }
 .overlay-bar-fill { position: absolute; left: 0; top: 0; width: 100%; background: var(--accent); border-radius: 3px; transition: height 0.3s ease; }
-.overlay-right { flex: 1; min-width: 0; }
-.overlay-timer { font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
-.overlay-task { font-size: 12px; color: var(--text); word-break: break-word; }

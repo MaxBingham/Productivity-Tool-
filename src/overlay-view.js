@@ -3,12 +3,14 @@
   const progressBar = document.getElementById('progressBar');
   const progressFill = document.getElementById('progressFill');
   const toggleBar = document.getElementById('toggleBar');
-  const timerEl = document.getElementById('timer');
+  const currentTimeEl = document.getElementById('currentTime');
+  const countdownEl = document.getElementById('countdown');
   const taskEl = document.getElementById('currentTask');
 
   let segments = [];
   let showBar = true;
-  const OVERLAY_UPDATE_MS = 60 * 1000;
+  const SEGMENT_FETCH_MS = 60 * 1000;
+  const CLOCK_TICK_MS = 1000;
 
   function todayStr() {
     const d = new Date();
@@ -20,14 +22,33 @@
     return (p[0] || 0) * 60 + (p[1] || 0);
   }
 
+  function pad2(n) {
+    return String(Math.floor(n)).padStart(2, '0');
+  }
+
+  function updateClock() {
+    const now = new Date();
+    currentTimeEl.textContent = pad2(now.getHours()) + ':' + pad2(now.getMinutes()) + ':' + pad2(now.getSeconds());
+  }
+
+  function getCurrentSegment(nowMin) {
+    for (let i = 0; i < segments.length; i++) {
+      const s = segments[i];
+      const startMin = timeToMin(s.start);
+      const endMin = timeToMin(s.end);
+      if (nowMin >= startMin && nowMin < endMin) return { seg: s, endMin };
+    }
+    return null;
+  }
+
   function render() {
     const now = new Date();
-    const nowMin = now.getHours() * 60 + now.getMinutes();
+    const nowMin = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
     const totalDayMin = 24 * 60;
-    let progressPct = (nowMin / totalDayMin) * 100;
+    const progressPct = (nowMin / totalDayMin) * 100;
 
     segmentList.innerHTML = '';
-    segments.forEach((seg, i) => {
+    segments.forEach((seg) => {
       const endMin = timeToMin(seg.end);
       const done = nowMin >= endMin;
       const current = nowMin >= timeToMin(seg.start) && nowMin < endMin;
@@ -45,30 +66,19 @@
       progressBar.style.display = 'none';
     }
 
-    let currentSeg = null;
-    for (let i = 0; i < segments.length; i++) {
-      const s = segments[i];
-      const startMin = timeToMin(s.start);
-      const endMin = timeToMin(s.end);
-      if (nowMin >= startMin && nowMin < endMin) {
-        currentSeg = s;
-        break;
-      }
-    }
-
-    if (currentSeg) {
-      const endMin = timeToMin(currentSeg.end);
-      const remainingMin = endMin - nowMin;
-      const m = Math.floor(remainingMin);
-      const sec = Math.round((remainingMin - m) * 60);
-      timerEl.textContent = (m > 0 ? m + 'm ' : '') + (sec > 0 ? sec + 's' : '0s');
-      if (currentSeg.type === 'work' && currentSeg.topic) taskEl.textContent = currentSeg.topic;
-      else if (currentSeg.type === 'shortBreak') taskEl.textContent = 'Short break';
-      else if (currentSeg.type === 'longBreak') taskEl.textContent = 'Long break';
-      else if (currentSeg.type === 'lunchBreak') taskEl.textContent = 'Lunch break';
-      else taskEl.textContent = currentSeg.topic || 'Work';
+    const current = getCurrentSegment(nowMin);
+    if (current) {
+      const remainingSec = Math.max(0, Math.round((current.endMin - nowMin) * 60));
+      countdownEl.textContent = remainingSec + ' s';
+      countdownEl.classList.remove('idle');
+      if (current.seg.type === 'work' && current.seg.topic) taskEl.textContent = current.seg.topic;
+      else if (current.seg.type === 'shortBreak') taskEl.textContent = 'Short break';
+      else if (current.seg.type === 'longBreak') taskEl.textContent = 'Long break';
+      else if (current.seg.type === 'lunchBreak') taskEl.textContent = 'Lunch break';
+      else taskEl.textContent = current.seg.topic || 'Work';
     } else {
-      timerEl.textContent = '--';
+      countdownEl.textContent = '--:--';
+      countdownEl.classList.add('idle');
       taskEl.textContent = segments.length ? 'Between segments' : 'No plan for today';
     }
   }
@@ -86,6 +96,10 @@
     render();
   };
 
+  updateClock();
+  setInterval(updateClock, CLOCK_TICK_MS);
+  render();
+  setInterval(render, CLOCK_TICK_MS);
   fetchAndRender();
-  setInterval(fetchAndRender, OVERLAY_UPDATE_MS);
+  setInterval(fetchAndRender, SEGMENT_FETCH_MS);
 })();

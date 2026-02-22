@@ -7,18 +7,19 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="overlay">
-  <div class="overlay-header">
+  <header class="overlay-drag" id="overlayDrag">
     <span class="overlay-title">Today</span>
-    <button type="button" class="overlay-toggle" id="toggleBar">Hide bar</button>
+    <span class="overlay-clock" id="currentTime">00:00</span>
+    <button type="button" class="overlay-toggle no-drag" id="toggleBar">Hide bar</button>
+  </header>
+  <div class="overlay-countdown-wrap">
+    <div class="overlay-countdown" id="countdown">--:--</div>
+    <div class="overlay-task" id="currentTask">No plan for today</div>
   </div>
   <div class="overlay-body">
     <div class="overlay-left" id="segmentList"></div>
     <div class="overlay-bar" id="progressBar" style="display: block;">
       <div class="overlay-bar-fill" id="progressFill" style="height: 0%;"></div>
-    </div>
-    <div class="overlay-right">
-      <div class="overlay-timer" id="timer">--:--</div>
-      <div class="overlay-task" id="currentTask">No plan for today</div>
     </div>
   </div>
   <script src="overlay-view.js"></script>
