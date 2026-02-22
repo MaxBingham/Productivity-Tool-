@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Time Blocker – Plan</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="main">
+  <h1>Plan your day</h1>
+  <div class="plan-date">
+    <label for="planDate">Date</label>
+    <input type="date" id="planDate" />
+  </div>
+  <div class="blocks" id="blocksList"></div>
+  <button type="button" class="add-block" id="addBlock">+ Add block</button>
+  <div class="settings-link"><a href="#" id="toggleSettings">Settings</a></div>
+  <div class="settings-panel" id="settingsPanel" style="display: none;">
+    <h3>Pomodoro</h3>
+    <label>Work (min) <input type="number" id="workMin" min="1" max="60" value="25" /></label>
+    <label>Short break (min) <input type="number" id="shortBreak" min="1" max="30" value="5" /></label>
+    <label>Long break (min) <input type="number" id="longBreak" min="1" max="45" value="15" /></label>
+    <label>Long break after <input type="number" id="longBreakAfter" min="2" max="8" value="4" /> sessions</label>
+    <label>Lunch window <input type="text" id="lunchStart" placeholder="12:00" /> – <input type="text" id="lunchEnd" placeholder="13:30" /></label>
+    <label>Lunch break (min) <input type="number" id="lunchBreak" min="5" max="60" value="25" /></label>
+    <button type="button" id="saveSettings">Save</button>
+  </div>
+  <script src="plan-view.js"></script>
+</body>
+</html>

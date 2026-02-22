@@ -1,0 +1,21 @@
+{
+  "name": "time-blocker",
+  "version": "1.0.0",
+  "description": "Lightweight time blocker with Pomodoro-style segments and overlay",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.timeblocker.app",
+    "productName": "Time Blocker",
+    "directories": { "output": "dist" },
+    "win": { "target": "nsis" }
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  }
+}

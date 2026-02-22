@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Time Blocker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="overlay">
+  <div class="overlay-header">
+    <span class="overlay-title">Today</span>
+    <button type="button" class="overlay-toggle" id="toggleBar">Hide bar</button>
+  </div>
+  <div class="overlay-body">
+    <div class="overlay-left" id="segmentList"></div>
+    <div class="overlay-bar" id="progressBar" style="display: block;">
+      <div class="overlay-bar-fill" id="progressFill" style="height: 0%;"></div>
+    </div>
+    <div class="overlay-right">
+      <div class="overlay-timer" id="timer">--:--</div>
+      <div class="overlay-task" id="currentTask">No plan for today</div>
+    </div>
+  </div>
+  <script src="overlay-view.js"></script>
+</body>
+</html>
